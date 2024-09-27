@@ -1,0 +1,141 @@
+/***************************************************************************     LIBRERÍAS     ********************************************************************/
+#include <Arduino.h>
+
+/***************************************************************************       PINES       ********************************************************************/
+//Parte 1 - Encender LEDs por 500ms
+#define led_roja 14
+#define led_verde 12
+#define led_azul 13
+
+/***************************************************************************     VARIABLES     ********************************************************************/
+//Variables para la parte 1
+int modo = 0;
+char led = 0;
+int led_time = 0;
+
+void turnon_red();
+void turnon_blue();
+void turnon_green();
+
+//Variables para la parte 2
+
+
+/***************************************************************************       SETUP       ********************************************************************/
+
+void setup() {
+//Parte 1 - Encender LEDs por 500ms
+  Serial.begin(115200);
+  pinMode(led_roja, OUTPUT);
+  pinMode(led_verde, OUTPUT);
+  pinMode(led_azul, OUTPUT);
+}
+
+/***************************************************************************       LOOP        ******************************************************************/
+
+
+void loop() {
+if (Serial.available() > 0)
+{
+
+
+//Parte 1 - Encender LEDs por 500ms
+  Serial.println("¿Qué desea hacer?");
+  Serial.println("Para encender una LED presione 1");
+  Serial.println("Para realizar una lectura ADC presione 2");
+  modo = Serial.read();
+  delay(2000);
+
+//Modo para encender las LEDS
+
+  if (modo == 1)
+  {
+    Serial.println("Para encender la LED roja presione R");
+    Serial.println("Para encender la LED azul presione B");
+    Serial.println("Para encender la LED verde presione V");
+    led = Serial.read();
+    delay(2000);
+    if (led == 82) //led roja
+    {
+      Serial.println("Indique el tiempo que desea encender la LED (entre 100 y 500)");
+      led_time = Serial.read();
+      while(led_time > 500 || led_time < 100)
+      {
+        Serial.println("Ingrese un valor entre 100 y 500");
+        led_time = Serial.read();
+        delay(2000);
+      }
+      turnon_red();
+      delay(2000);
+    }
+      delay(2000);
+      if (led == 66) //led azul
+    {
+      Serial.println("Indique el tiempo que desea encender la LED (entre 100 y 500)");
+      led_time = Serial.read();
+      while(led_time > 500 || led_time < 100)
+      {
+        Serial.println("Ingrese un valor entre 100 y 500");
+        led_time = Serial.read();
+        delay(2000);
+      }
+      turnon_blue();
+      delay(2000);
+    }
+    if (led == 86) //led verde
+    {
+      Serial.println("Indique el tiempo que desea encender la LED (entre 100 y 500)");
+      led_time = Serial.read();
+      while(led_time > 500 || led_time < 100)
+      {
+        Serial.println("Ingrese un valor entre 100 y 500");
+        led_time = Serial.read();
+        delay(2000);
+      }
+      turnon_green();
+      delay(2000);
+    }  
+    }
+//Modo para leer el potenciómetro
+    else if (modo == 2)
+    {
+      //leer adc 
+    }
+
+//Modo para opciones inválidas
+    else {
+      Serial.println("Opción inválida, elija opción 1 u opción 2... tonto");
+    }
+  }
+}
+/***************************************************************************     FUNCIONES     ********************************************************************/
+
+
+void turnon_red(){
+  digitalWrite(led_roja, HIGH);
+  delay(led_time);
+  digitalWrite(led_roja, LOW);
+  int modo = 0;
+  char led = 0;
+  int led_time = 0;
+  delay(1000);
+}
+
+void turnon_blue(){
+  digitalWrite(led_azul, HIGH);
+  delay(led_time);
+  digitalWrite(led_azul, LOW);
+  int modo = 0;
+  char led = 0;
+  int led_time = 0;
+  delay(1000);
+}
+
+void turnon_green(){
+  digitalWrite(led_verde, HIGH);
+  delay(led_time);
+  digitalWrite(led_verde, LOW);
+  int modo = 0;
+  char led = 0;
+  int led_time = 0;
+  delay(1000);
+}
